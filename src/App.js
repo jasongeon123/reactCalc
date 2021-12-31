@@ -137,6 +137,10 @@ function formatOperand(operand) {
   return `${INTEGER_FORMATTER.format(integer)}.${decimal}`
 }
 
+const orange = {
+  backgroundColor:'orange'
+};
+
 function App() {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
     reducer,
@@ -160,7 +164,7 @@ function App() {
       <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
         DEL
       </button>
-      <OperationButton operation="÷" dispatch={dispatch} style={{backgroundColor: "orange"}}/>
+      <OperationButton operation="÷" dispatch={dispatch} style={orange} />
       <DigitButton digit="1" dispatch={dispatch} />
       <DigitButton digit="2" dispatch={dispatch} />
       <DigitButton digit="3" dispatch={dispatch} />
