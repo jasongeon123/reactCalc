@@ -1,10 +1,11 @@
 *,*::before,*::after{
     box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body{
     margin : 0;
-    background-color: #A9A9A9;
+    background-color: black;
 }
 
 .calculator-grid{
@@ -13,29 +14,39 @@ body{
     justify-content:center;
     grid-template-columns: repeat(4,6rem);
     grid-template-rows: minmax(7rem,auto) repeat(5,6rem);
+    column-gap: 10px;
+    row-gap: 10px;
 }
 
-
 .calculator-grid > button{
+    border-radius: 50%;
     cursor:pointer;
     font-size:2rem;
-    border:1px solid white;
-    outline:none;
-    background-color:rgba(255,255,255,.75);
+    background-color:#1c1c1c;
+    color:rgba(225,217,209,1);
+    border: none;
+}
+
+.top{
+    background-color:#d4d4d2 !important;
+    color:black !important;
 }
 
 .calculator-grid > button:hover,
 .calculator-grid > button:focus-visible{
-    background-color:rgba(255,255,255,.9);
+    background-color:#505050;
 }
 
-.span-two{
+.calculator-grid > .span-two{
     grid-column : span 2;
+    padding: 10px 20px;
+    margin: 4px 2px;
+    border-radius:50px;
 }
 
 .output{
     grid-column:1 / -1;
-    background-color: rgba(0,0,0,.75);
+    background-color: black;
     display:flex;
     flex-direction: column;
     align-items:flex-end;
@@ -53,8 +64,4 @@ body{
 .output .current-operand{
     color:white;
     font-size: 2.5rem;
-}
-
-.orange{
-    color:orange;
 }
