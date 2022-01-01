@@ -37,7 +37,7 @@ body{
     background-color:#505050;
 }
 
-.calculator-grid > .span-two{
+.calculator-grid > .spanTwo{
     grid-column : span 2;
     padding: 10px 20px;
     margin: 4px 2px;
