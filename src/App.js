@@ -68,7 +68,8 @@ function reducer(state, { type, payload }) {
       }
     case ACTIONS.CLEAR:
       return {
-          
+          state:null,
+          currentOperand:"0",
       }
     case ACTIONS.DELETE_DIGIT:
       if (state.overwrite) {
@@ -88,18 +89,21 @@ function reducer(state, { type, payload }) {
         currentOperand: state.currentOperand.slice(0, -1),
       }
     case ACTIONS.PLUSMINUS:
-      if (
-        state.operation == null ||
-        state.currentOperand == null ||
-        state.previousOperand == null
-      ) {
+      if (state.currentOperand == null) {
         return state
+      }
+      if (state.previousOperand != null){
+        return {
+          ...state,
+          overwrite:true,
+          currentOperand: flipsign(state),
+        }
       }
       return{
         ...state,
         overwrite:true,
-        previousOperand: null,
         operation: null,
+        currentOperand: flipsign(state),
       }
     case ACTIONS.EVALUATE:
       if (
@@ -119,6 +123,13 @@ function reducer(state, { type, payload }) {
       }
       default: return
   }
+}
+
+function flipsign({ currentOperand, previousOperand, operation }){
+  const current = parseFloat(currentOperand)
+  if (isNaN(current)) return ""
+  let comp = currentOperand*-1
+  return comp.toString()
 }
 
 function evaluate({ currentOperand, previousOperand, operation }) {
@@ -151,6 +162,14 @@ const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
 })
 
 function formatOperand(operand) {
+  if (operand == null) return 
+  const [integer, decimal] = operand.split(".")
+  if (decimal == null) return INTEGER_FORMATTER.format(integer)
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`
+}
+
+function tformatOperand(operand,top) {
+  if (operand == null && top==null) return "0"
   if (operand == null) return
   const [integer, decimal] = operand.split(".")
   if (decimal == null) return INTEGER_FORMATTER.format(integer)
@@ -171,7 +190,7 @@ function App() {
         <div className="previous-operand">
           {formatOperand(previousOperand)} {operation}
         </div>
-        <div className="current-operand">{formatOperand(currentOperand)}</div>
+        <div className="current-operand">{tformatOperand(currentOperand,previousOperand)}</div>
       </div>
       <button className="top" onClick={() => dispatch({ type: ACTIONS.CLEAR })} >
         AC
