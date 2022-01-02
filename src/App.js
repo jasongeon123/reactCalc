@@ -2,7 +2,7 @@ import React from "react"
 import { useReducer } from "react"
 import DigitButton from "./DigitButton"
 import OperationButton from "./OperationButton"
-import styles from "./styles.css"
+import "./styles.css"
 
 
 
@@ -138,12 +138,14 @@ function formatOperand(operand) {
   return `${INTEGER_FORMATTER.format(integer)}.${decimal}`
 }
 
+
+
 function App() {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
     reducer,
     {}
   )
-
+  
   return (
     <div className="calculator-grid">
       <div className="output">
@@ -155,13 +157,13 @@ function App() {
       <button className="top" onClick={() => dispatch({ type: ACTIONS.CLEAR })} >
         AC
       </button>
-      <button className="top" onClick={() => dispatch({ type: ACTIONS.CLEAR })} >
+      <button className="top" onClick={() => dispatch({ type: ACTIONS.CHOOSE_OPERATION })} >
         +/-
       </button>
       <button className="top" onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
         DEL
       </button>
-      <OperationButton operation="÷" dispatch={dispatch} />
+      <OperationButton className="top" operation="÷" dispatch={dispatch} />
       <DigitButton digit="1" dispatch={dispatch} />
       <DigitButton digit="2" dispatch={dispatch} />
       <DigitButton digit="3" dispatch={dispatch} />
@@ -174,10 +176,9 @@ function App() {
       <DigitButton digit="8" dispatch={dispatch} />
       <DigitButton digit="9" dispatch={dispatch} />
       <OperationButton operation="-" dispatch={dispatch} />
-      <DigitButton className= {styles.spanTwo} digit="." dispatch={dispatch} />
+      <DigitButton digit="." dispatch={dispatch} />
       <DigitButton digit="0" dispatch={dispatch} />
       <button
-        className="spanTwo"
         onClick={() => dispatch({ type: ACTIONS.EVALUATE })}
       >
         =
